@@ -3,9 +3,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
@@ -16,17 +13,21 @@ namespace WebAddressbookTests
         [Test]
         public void GroupCreationTest()
         {
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToGroupsPage();
-            InitGroupCreation();
             GroupData group = new GroupData("aaa");
             group.Header = "bbb";
             group.Footer = "ccc";
-            FillGroupForm(group);
-            Submit();
-            ReturnToGroupsPage();
-            Logout();
+
+            app.Groups.Create(group);
+        }
+
+        [Test]
+        public void EmptyGroupCreationTest()
+        {
+            GroupData group = new GroupData("");
+            group.Header = "";
+            group.Footer = "";
+
+            app.Groups.Create(group);
         }
     }
 }
