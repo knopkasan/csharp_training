@@ -27,18 +27,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper CloseAlert()
-        {
-            driver.SwitchTo().Alert().Accept();
-            return this;
-        }
-
-        public ContactHelper RemoveContact()
-        {
-            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            return this;
-        }
-
         public ContactHelper Modify(int index, ContactData newData)
         {
             SelectContact(index);
@@ -101,6 +89,18 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
+            return this;
+        }
+
+        public ContactHelper CloseAlert()
+        {
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             return this;
         }
     }
