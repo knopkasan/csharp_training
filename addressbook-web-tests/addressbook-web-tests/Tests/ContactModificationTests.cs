@@ -10,11 +10,11 @@ namespace WebAddressbookTests
    public class ContactModificationTests : TestBase
     {
         [Test]
-        public void ContactModoficationTest()
+        public void ContactModificationTest()
         {
             ContactData newData = new ContactData("ccc", "vvv");
 
-            app.Contacts.Modify(1, newData);
+            app.Contacts.Modify(3, newData);
         }
     }
 }
