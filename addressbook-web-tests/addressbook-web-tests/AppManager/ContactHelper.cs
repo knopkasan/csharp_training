@@ -21,6 +21,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int index)
         {
+            manager.Navigator.OpenHomePage();
             CheckRecordsExistAndCreate(index);
             SelectContact(index);
             RemoveContact();
@@ -31,6 +32,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(int index, ContactData newData)
         {
+            manager.Navigator.OpenHomePage();
             CheckRecordsExistAndCreate(index);
             InitContactModification(index);
             FillContactForm(newData);
