@@ -14,12 +14,14 @@ namespace WebAddressbookTests
         private string firstnameField = "firstname";
         private string lastnameField = "lastname";
 
+        
         public ContactHelper(ApplicationManager manager) : base(manager)
         {
         }
 
         public ContactHelper Remove(int index)
         {
+            CheckRecordsExistAndCreate(index);
             SelectContact(index);
             RemoveContact();
             CloseAlert();
@@ -29,6 +31,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(int index, ContactData newData)
         {
+            CheckRecordsExistAndCreate(index);
             InitContactModification(index);
             FillContactForm(newData);
             SubmitContactModification();
@@ -45,6 +48,31 @@ namespace WebAddressbookTests
             return this;
         }
 
+        /// <summary>
+        /// TODO: продумать, как создавать недостающие записи в цикле. Этот вариант работает, но мне не нравится, локатор в условии цикла
+        /// </summary>
+        /// <param name="index"></param>
+        /*public void CheckRecordsExistAndCreate(int index)
+        {
+            if (!IsElementPresent(By.XPath("(//img[@alt='Edit'])[" + index + "]")))
+            {
+                while (driver.FindElements(By.XPath("//img[@alt='Edit']")).Count < index)
+                {
+                    ContactData contact = new ContactData("aaa", "bbb");
+                    Create(contact);
+                }
+            }
+        }*/
+
+        public void CheckRecordsExistAndCreate(int index)
+        {
+            if (!CheckRecord(index))
+            {
+                ContactData contact = new ContactData("aaa", "bbb");
+                Create(contact);
+            }
+        }
+
         public ContactHelper ReturnToHomePage()
         {
             driver.FindElement(By.LinkText("home page")).Click();
@@ -58,12 +86,8 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name(firstnameField)).Click();
-            driver.FindElement(By.Name(firstnameField)).Clear();
-            driver.FindElement(By.Name(firstnameField)).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name(lastnameField)).Click();
-            driver.FindElement(By.Name(lastnameField)).Clear();
-            driver.FindElement(By.Name(lastnameField)).SendKeys(contact.Lastname);
+            Type(By.Name(firstnameField), contact.Firstname);
+            Type(By.Name(lastnameField), contact.Lastname);
             return this;
         }
 
@@ -102,6 +126,11 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             return this;
+        }
+
+        public bool CheckRecord(int index)
+        {
+            return IsElementPresent(By.XPath("(//img[@alt='Edit'])[" + index + "]"));
         }
     }
 }

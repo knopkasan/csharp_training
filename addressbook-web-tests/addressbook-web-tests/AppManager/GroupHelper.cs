@@ -19,9 +19,11 @@ namespace WebAddressbookTests
         {
         }
 
+
         public GroupHelper Modify(int index, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
+            CheckRecordsExistAndCreate(index);
             SelectGroup(index);
             InitGroupModification();
             FillGroupForm(newData);
@@ -43,12 +45,42 @@ namespace WebAddressbookTests
         public GroupHelper Remove (int index)
         {
             manager.Navigator.GoToGroupsPage();
+            CheckRecordsExistAndCreate(index);
             SelectGroup(index);
             DeleteGroup();
             ReturnToGroupsPage();
             return this;
         }
 
+        /// <summary>
+        /// TODO: продумать, как создавать недостающие записи в цикле. Этот вариант работает, но мне не нравится, локатор в условии цикла
+        /// </summary>
+        /// <param name="index"></param>
+        /*public void CheckRecordsExistAndCreate(int index)
+        {
+            if (!CheckRecord(index))
+            {
+               while (driver.FindElements(By.XPath("//input[@name='selected[]']")).Count < index)
+               {
+                    GroupData group = new GroupData("aaa");
+                    group.Header = "bbb";
+                    group.Footer = "ccc";
+                    Create(group);
+               }
+            }
+            
+        }*/
+
+        public void CheckRecordsExistAndCreate(int index)
+        {
+            if (!CheckRecord(index))
+            {
+                GroupData group = new GroupData("aaa");
+                group.Header = "bbb";
+                group.Footer = "ccc";
+                Create(group);
+            }
+        }
 
         public GroupHelper ReturnToGroupsPage()
         {
@@ -76,17 +108,12 @@ namespace WebAddressbookTests
 
         public GroupHelper FillGroupForm(GroupData group)
         {
-            driver.FindElement(By.Name(groupNameField)).Click();
-            driver.FindElement(By.Name(groupNameField)).Clear();
-            driver.FindElement(By.Name(groupNameField)).SendKeys(group.Name);
-            driver.FindElement(By.Name(groupHeaderField)).Click();
-            driver.FindElement(By.Name(groupHeaderField)).Clear();
-            driver.FindElement(By.Name(groupHeaderField)).SendKeys(group.Header);
-            driver.FindElement(By.Name(groupFooterField)).Click();
-            driver.FindElement(By.Name(groupFooterField)).Clear();
-            driver.FindElement(By.Name(groupFooterField)).SendKeys(group.Footer);
+            Type(By.Name(groupNameField), group.Name);
+            Type(By.Name(groupHeaderField), group.Header);
+            Type(By.Name(groupFooterField), group.Footer);
             return this;
         }
+
 
         public GroupHelper Submit()
         {
@@ -104,6 +131,10 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("edit")).Click();
             return this;
+        }
+        public bool CheckRecord(int index)
+        {
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]"));
         }
     }
 }
