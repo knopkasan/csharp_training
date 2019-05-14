@@ -20,7 +20,7 @@ namespace WebAddressbookTests
             app.Groups.Create(group);
         }
 
-        [Test]
+        /*[Test]
         public void EmptyGroupCreationTest()
         {
             GroupData group = new GroupData("");
@@ -28,6 +28,6 @@ namespace WebAddressbookTests
             group.Footer = "";
 
             app.Groups.Create(group);
-        }
+        }*/
     }
 }

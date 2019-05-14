@@ -12,9 +12,17 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newData = new ContactData("ccc", "vvv");
-
+            //preporation
+            ContactData data = new ContactData("Иван", "Иванов");
+            ContactData newData = new ContactData("Петр", "Петров");
+            app.Navigator.OpenHomePage();
+            app.Contacts.CheckRecordExistAndCreate(1, data);
+            
+            //action
             app.Contacts.Modify(1, newData);
+
+            //verification
+            app.Contacts.AssertModifiedRecord(1, newData);
         }
     }
 }

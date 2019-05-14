@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -23,7 +24,6 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int index, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            CheckRecordsExistAndCreate(index);
             SelectGroup(index);
             InitGroupModification();
             FillGroupForm(newData);
@@ -45,7 +45,6 @@ namespace WebAddressbookTests
         public GroupHelper Remove (int index)
         {
             manager.Navigator.GoToGroupsPage();
-            CheckRecordsExistAndCreate(index);
             SelectGroup(index);
             DeleteGroup();
             ReturnToGroupsPage();
@@ -71,13 +70,10 @@ namespace WebAddressbookTests
             
         }*/
 
-        public void CheckRecordsExistAndCreate(int index)
+        public void CheckRecordsExistAndCreate(int index, GroupData group)
         {
             if (!CheckRecord(index))
             {
-                GroupData group = new GroupData("aaa");
-                group.Header = "bbb";
-                group.Footer = "ccc";
                 Create(group);
             }
         }
@@ -136,5 +132,22 @@ namespace WebAddressbookTests
         {
             return IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]"));
         }
+
+        public bool AssertFields(GroupData group)
+        {
+            return driver.FindElement(By.Name(groupNameField)).GetAttribute("value")
+                   == group.Name
+                && driver.FindElement(By.Name(groupHeaderField)).GetAttribute("value")
+                   == group.Header
+                && driver.FindElement(By.Name(groupFooterField)).GetAttribute("value")
+                   == group.Footer;
+        }
+        public void AssertModifiedGroup(int index, GroupData group)
+        {
+            SelectGroup(index);
+            InitGroupModification();
+            Assert.IsTrue(AssertFields(group));
+        }
+
     }
 }

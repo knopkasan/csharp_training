@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -22,7 +23,6 @@ namespace WebAddressbookTests
         public ContactHelper Remove(int index)
         {
             manager.Navigator.OpenHomePage();
-            CheckRecordsExistAndCreate(index);
             SelectContact(index);
             RemoveContact();
             CloseAlert();
@@ -33,7 +33,6 @@ namespace WebAddressbookTests
         public ContactHelper Modify(int index, ContactData newData)
         {
             manager.Navigator.OpenHomePage();
-            CheckRecordsExistAndCreate(index);
             InitContactModification(index);
             FillContactForm(newData);
             SubmitContactModification();
@@ -66,11 +65,10 @@ namespace WebAddressbookTests
             }
         }*/
 
-        public void CheckRecordsExistAndCreate(int index)
+        public void CheckRecordExistAndCreate(int index, ContactData contact)
         {
             if (!CheckRecord(index))
             {
-                ContactData contact = new ContactData("aaa", "bbb");
                 Create(contact);
             }
         }
@@ -130,9 +128,23 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void AssertModifiedRecord(int index, ContactData contact)
+        {
+            InitContactModification(index);
+            Assert.IsTrue(AssertContact(contact));
+        }
+
         public bool CheckRecord(int index)
         {
             return IsElementPresent(By.XPath("(//img[@alt='Edit'])[" + index + "]"));
         }
+
+        public bool AssertContact(ContactData contact)
+        {
+            return driver.FindElement(By.Name(firstnameField)).GetAttribute("value") == contact.Firstname
+                && driver.FindElement(By.Name(lastnameField)).GetAttribute("value") == contact.Lastname;
+        }
+
+
     }
 }
