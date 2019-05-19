@@ -44,7 +44,7 @@ namespace WebAddressbookTests
         {
             InitContactCreation();
             FillContactForm(contact);
-            Submit();
+            SubmitContactCreation();
             ReturnToHomePage();
             return this;
         }
@@ -91,7 +91,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Submit()
+        public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
             return this;

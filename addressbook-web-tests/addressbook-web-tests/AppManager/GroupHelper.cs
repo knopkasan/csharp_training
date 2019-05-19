@@ -20,7 +20,7 @@ namespace WebAddressbookTests
         {
         }
 
-
+        
         public GroupHelper Modify(int index, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
@@ -37,7 +37,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToGroupsPage();
             InitGroupCreation();
             FillGroupForm(group);
-            Submit();
+            SubitGroupCreate();
             ReturnToGroupsPage();
             return this;
         }
@@ -46,7 +46,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToGroupsPage();
             SelectGroup(index);
-            DeleteGroup();
+            RemoveGroup();
             ReturnToGroupsPage();
             return this;
         }
@@ -86,13 +86,14 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
-        public GroupHelper DeleteGroup()
+        public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
+            groupCache = null;
             return this;
         }
 
@@ -111,15 +112,17 @@ namespace WebAddressbookTests
         }
 
 
-        public GroupHelper Submit()
+        public GroupHelper SubitGroupCreate()
         {
             driver.FindElement(By.Name("submit")).Click();
+            groupCache = null;
             return this;
         }
 
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            groupCache = null;
             return this;
         }
 
@@ -130,7 +133,7 @@ namespace WebAddressbookTests
         }
         public bool CheckRecord(int index)
         {
-            return IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]"));
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]"));
         }
 
         public bool AssertFields(GroupData group)
@@ -149,5 +152,28 @@ namespace WebAddressbookTests
             Assert.IsTrue(AssertFields(group));
         }
 
+        private List<GroupData> groupCache = null;
+
+        public List<GroupData> GetGroupList()
+        {
+            if (groupCache == null)
+            {
+                groupCache = new List<GroupData>();
+                manager.Navigator.GoToGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    groupCache.Add(new GroupData(element.Text){
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
+            }
+            return new List<GroupData>(groupCache);
+        }
+
+        public int GetGroupCount()
+        {
+            return driver.FindElements(By.CssSelector("span.group")).Count;
+        }
     }
 }
