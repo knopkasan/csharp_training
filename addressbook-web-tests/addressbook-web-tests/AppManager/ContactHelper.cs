@@ -26,7 +26,7 @@ namespace WebAddressbookTests
             SelectContact(index);
             RemoveContact();
             CloseAlert();
-            //manager.Navigator.OpenHomePage();
+            manager.Navigator.OpenHomePage();
             return this;
         }
 
@@ -94,25 +94,27 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + "]")).Click();
           
             return this;
         }
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -125,6 +127,7 @@ namespace WebAddressbookTests
         public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -136,13 +139,40 @@ namespace WebAddressbookTests
 
         public bool CheckRecord(int index)
         {
-            return IsElementPresent(By.XPath("(//img[@alt='Edit'])[" + index + "]"));
+            return IsElementPresent(By.XPath("(//img[@alt='Edit'])[" + (index+1) + "]"));
         }
 
         public bool AssertContact(ContactData contact)
         {
             return driver.FindElement(By.Name(firstnameField)).GetAttribute("value") == contact.Firstname
                 && driver.FindElement(By.Name(lastnameField)).GetAttribute("value") == contact.Lastname;
+        }
+
+        private List<ContactData> contactCache = null;
+
+        public List<ContactData> GetContactList()
+        {
+            if (contactCache == null)
+            {
+                contactCache = new List<ContactData>();
+                manager.Navigator.OpenHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+                foreach(IWebElement element in elements)
+                {
+                    var lastname = element.FindElement(By.XPath("./td[2]"));
+                    var firstname = element.FindElement(By.XPath("./td[3]"));
+                    contactCache.Add(new ContactData(firstname.Text, lastname.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
+            }
+            return new List<ContactData>(contactCache);
+        }
+
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.CssSelector("tr[name='entry']")).Count;
         }
 
 

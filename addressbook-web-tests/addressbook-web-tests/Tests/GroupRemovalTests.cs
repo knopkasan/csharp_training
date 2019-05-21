@@ -31,7 +31,6 @@ namespace WebAddressbookTests
             GroupData toBeRemoved = oldGroups[0];
             oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups);
-            //Assert.IsFalse(app.Groups.CheckRecord(0));
 
             foreach(GroupData group in newGroups)
             {

@@ -14,15 +14,35 @@ namespace WebAddressbookTests
         {
             //preporation
             ContactData data = new ContactData("Иван", "Иванов");
-            ContactData newData = new ContactData("Петр", "Петров");
             app.Navigator.OpenHomePage();
-            app.Contacts.CheckRecordExistAndCreate(1, data);
-            
+            app.Contacts.CheckRecordExistAndCreate(0, data);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData oldData = oldContacts[0];
+
             //action
-            app.Contacts.Modify(1, newData);
+            ContactData newData = new ContactData("Петр", "Петров");
+            app.Contacts.Modify(0, newData);
 
             //verification
-            app.Contacts.AssertModifiedRecord(1, newData);
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].Firstname = newData.Firstname;
+            oldContacts[0].Lastname = newData.Lastname;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                if (contact.Id == oldData.Id)
+                {
+                    var str = string.Concat(newData.Firstname, newData.Lastname);
+                    var str1 = string.Concat(contact.Firstname, contact.Lastname);
+                    Assert.AreEqual(str, str1);
+
+                }
+            }
         }
     }
 }

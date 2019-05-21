@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -12,9 +13,21 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData("aaa", "bbb");
+            //preporation
+            ContactData contact = new ContactData("firstname", "firstname");
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
 
+            //action
             app.Contacts.Create(contact);
+
+            //verivication
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts.Count, newContacts.Count);
         }
     }
 }

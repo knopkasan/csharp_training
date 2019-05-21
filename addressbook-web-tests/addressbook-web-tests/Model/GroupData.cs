@@ -10,7 +10,7 @@ namespace WebAddressbookTests
     {
         public GroupData(string name)
         {
-            this.Name = name;
+            Name = name;
         }
 
         public bool Equals(GroupData other)

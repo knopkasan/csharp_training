@@ -37,7 +37,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToGroupsPage();
             InitGroupCreation();
             FillGroupForm(group);
-            SubitGroupCreate();
+            SubmitGroupCreate();
             ReturnToGroupsPage();
             return this;
         }
@@ -112,7 +112,7 @@ namespace WebAddressbookTests
         }
 
 
-        public GroupHelper SubitGroupCreate()
+        public GroupHelper SubmitGroupCreate()
         {
             driver.FindElement(By.Name("submit")).Click();
             groupCache = null;
