@@ -167,6 +167,29 @@ namespace WebAddressbookTests
                         Id = element.FindElement(By.TagName("input")).GetAttribute("value")
                     });
                 }
+
+                
+                /* решение с разбиением строки
+                 foreach (IWebElement element in elements)
+                {
+                    groupCache.Add(new GroupData(element.Text){
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
+                string allgroupnames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string [] parts = allgroupnames.Split('\n');
+                int shift = groupCache.Count - parts.Length;
+                for (int i = 0; i < groupCache.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        groupCache[1].Name = "";
+                    }
+                    else
+                    {
+                        groupCache[i].Name = parts[i-shift].Trim();
+                    }
+                }*/
             }
             return new List<GroupData>(groupCache);
         }

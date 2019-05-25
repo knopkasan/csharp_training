@@ -8,6 +8,9 @@ namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
+        private string allPhones;
+        private string allMails;
+
         public ContactData(string firstname, string lastname)
         {
             Firstname = firstname;
@@ -68,11 +71,11 @@ namespace WebAddressbookTests
 
         public string Address { get; set; }
 
-        public string Home { get; set; }
+        public string HomePhone { get; set; }
 
-        public string Mobile { get; set; }
+        public string MobilePhone { get; set; }
 
-        public string Work { get; set; }
+        public string WorkPhone { get; set; }
 
         public string Fax { get; set; }
 
@@ -92,5 +95,59 @@ namespace WebAddressbookTests
 
         public string Id { get; set; }
 
+        public string AllPhones
+        {
+            get{
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }
+            }
+            set { allPhones = value; }
+        }
+
+        public string AllMails
+        {
+            get
+            {
+                if (allMails != null)
+                {
+                    return allMails;
+                }
+                else
+                {
+                    return (AddSpecSymbol(Email) + AddSpecSymbol(Email2) + AddSpecSymbol(Email3)).Trim();
+                }
+            }
+            set { allMails = value; }
+        }
+
+        private string AddSpecSymbol(string email)
+        {
+            if (email == null || email == "") //string.IsNullOrEmpty(email)
+            {
+                return "";
+            }
+            else
+            {
+                return email + "\r\n";
+            }
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "") //string.IsNullOrEmpty(phone)
+            {
+                return "";
+            }
+            else
+            {
+                return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            }
+        }
     }
 }
