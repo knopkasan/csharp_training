@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -226,6 +228,14 @@ namespace WebAddressbookTests
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone
             };
+        }
+
+        public int GetNumberOfSearchResult()
+        {
+            manager.Navigator.OpenHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
         }
     }
 }
