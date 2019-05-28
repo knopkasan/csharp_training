@@ -24,7 +24,7 @@ namespace WebAddressbookTests
         {
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
-            baseURL = "http://192.168.129.71:8080/";
+            baseURL = "http://localhost:8080/";
             loginLogoutHelper = new LoginLogoutHelper(this);
             navigationHelper = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);

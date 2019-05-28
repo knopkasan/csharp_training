@@ -62,6 +62,7 @@
     <Compile Include="Model\AccountData.cs" />
     <Compile Include="AppManager\ApplicationManager.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
+    <Compile Include="Tests\SearchTests.cs" />
     <Compile Include="Tests\ContactCreationTests.cs" />
     <Compile Include="Model\ContactData.cs" />
     <Compile Include="AppManager\ContactHelper.cs" />

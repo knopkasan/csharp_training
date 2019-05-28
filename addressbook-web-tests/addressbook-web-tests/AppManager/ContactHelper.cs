@@ -114,6 +114,14 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper ShowDetails(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+            return this;
+        }
+
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
@@ -137,6 +145,13 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             contactCache = null;
+            return this;
+        }
+
+        public ContactHelper Search(string text)
+        {
+            manager.Navigator.OpenHomePage();
+            Type(By.Name("searchstring"), text);
             return this;
         }
 
@@ -230,12 +245,30 @@ namespace WebAddressbookTests
             };
         }
 
+        public ContactData GetContactInformationFromDetail(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            ShowDetails(index);
+            string content = driver.FindElement(By.Id("content")).Text;
+
+            return new ContactData()
+            {
+                DetailInformation = content
+            };
+        }
+
         public int GetNumberOfSearchResult()
         {
             manager.Navigator.OpenHomePage();
             string text = driver.FindElement(By.TagName("label")).Text;
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
+        }
+
+
+        public int GetDisplayedElement()
+        {
+            return driver.FindElements(By.XPath("//tr[@name='entry'][@style!='display: none;']")).Count;
         }
     }
 }
