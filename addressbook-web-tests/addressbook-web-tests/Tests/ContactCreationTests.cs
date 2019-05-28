@@ -14,7 +14,7 @@ namespace WebAddressbookTests
         public void ContactCreationTest()
         {
             //preporation
-            ContactData contact = new ContactData("firstname", "firstname");
+            ContactData contact = new ContactData("firstname", "lastname");
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             //action
@@ -34,7 +34,7 @@ namespace WebAddressbookTests
         public void EmrtyContactCreationTest()
         {
             //preporation
-            ContactData contact = new ContactData("", "");
+            ContactData contact = new ContactData("", null);
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             //action
