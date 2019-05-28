@@ -26,11 +26,11 @@ namespace WebAddressbookTests
         [Test]
         public void DetailInformationTest()
         {
-            ContactData fromDetail = app.Contacts.GetContactInformationFromDetail(0);
+            ContactData fromDetails = app.Contacts.GetContactInformationFromDetails(0);
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
 
             //verification
-            Assert.AreEqual(fromDetail.DetailInformation, fromForm.DetailInformation);
+            Assert.AreEqual(fromDetails.DetailInformation, fromForm.DetailInformation);
         }
     }
 }

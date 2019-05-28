@@ -16,7 +16,7 @@ namespace WebAddressbookTests
             app.Contacts.Search("firstname");
 
             //verification
-            Assert.AreEqual(app.Contacts.GetNumberOfSearchResult(), app.Contacts.GetDisplayedElement());
+            Assert.AreEqual(app.Contacts.GetNumberOfSearchResult(), app.Contacts.GetDisplayedElements());
         }
     }
 }

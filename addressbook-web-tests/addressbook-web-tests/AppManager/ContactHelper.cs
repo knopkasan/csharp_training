@@ -245,7 +245,7 @@ namespace WebAddressbookTests
             };
         }
 
-        public ContactData GetContactInformationFromDetail(int index)
+        public ContactData GetContactInformationFromDetails(int index)
         {
             manager.Navigator.OpenHomePage();
             ShowDetails(index);
@@ -266,7 +266,7 @@ namespace WebAddressbookTests
         }
 
 
-        public int GetDisplayedElement()
+        public int GetDisplayedElements()
         {
             return driver.FindElements(By.XPath("//tr[@name='entry'][@style!='display: none;']")).Count;
         }
