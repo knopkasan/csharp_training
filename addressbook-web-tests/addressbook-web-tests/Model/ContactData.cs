@@ -141,29 +141,76 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Firstname + " " + Lastname + "\r\n" + Address + "\r\n" + "" + "\r\n" + "H: " + HomePhone +
-                       "\r\n" + "M: " + MobilePhone + "\r\n" + "W: " + WorkPhone + "\r\n" + "" + "\r\n" + Email + "\r\n" + Email2 + "\r\n" + Email3).Trim();
+                    string resultText = "";
+
+                    string fio = "";
+
+                    if (!string.IsNullOrEmpty(Firstname))
+                    {
+                        fio += Firstname;
+                    }
+                    if (!string.IsNullOrEmpty(Lastname))
+                    {
+                        fio += Lastname;
+                    }
+                    if(!string.IsNullOrEmpty(fio))
+                    {
+                        resultText += fio + "\r\n";
+                    }
+                    if (!string.IsNullOrEmpty(Address))
+                    {
+                        resultText += Address + "\r\n";
+                    }
+                    resultText += "\r\n";
+                    if (!string.IsNullOrEmpty(HomePhone))
+                    {
+                        resultText += "H: " + HomePhone + "\r\n";
+                    }
+                    if (!string.IsNullOrEmpty(MobilePhone))
+                    {
+                        resultText += "M: " + MobilePhone + "\r\n";
+                    }
+                    if (!string.IsNullOrEmpty(WorkPhone))
+                    {
+                        resultText += "W: " +  WorkPhone + "\r\n";
+                    }
+                    resultText += "\r\n";
+                    if (!string.IsNullOrEmpty(Email))
+                    {
+                        resultText += Email + "\r\n";
+                    }
+                    if (!string.IsNullOrEmpty(Email2))
+                    {
+                        resultText += Email2 + "\r\n";
+                    }
+                    if (!string.IsNullOrEmpty(Email3))
+                    {
+                        resultText += Email3 + "\r\n";
+                    }
+                    resultText += "\r\n";
+
+                    return resultText.Trim('\r', '\n');
                 }
             }
             set { detailInformation = value; }
         }
 
         
-        private string AddSpecSymbol(string email)
+        private string AddSpecSymbol(string str)
         {
-            if (email == null || email == "") //string.IsNullOrEmpty(email)
+            if (string.IsNullOrEmpty(str))
             {
                 return "";
             }
             else
             {
-                return email + "\r\n";
+                return str + "\r\n";
             }
         }
 
         private string CleanUp(string phone)
         {
-            if (phone == null || phone == "") //string.IsNullOrEmpty(phone)
+            if (string.IsNullOrEmpty(phone))
             {
                 return "";
             }

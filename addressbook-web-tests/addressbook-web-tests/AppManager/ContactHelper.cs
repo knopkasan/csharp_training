@@ -268,7 +268,17 @@ namespace WebAddressbookTests
 
         public int GetDisplayedElements()
         {
-            return driver.FindElements(By.XPath("//tr[@name='entry'][@style!='display: none;']")).Count;
+            int result = 0;
+            IList<IWebElement> displayedrows = driver.FindElements(By.Name("entry"));
+            foreach(IWebElement row in displayedrows)
+            {
+                if (row.Displayed)
+                {
+                    result++;
+                }
+            }
+
+            return result;
         }
     }
 }
