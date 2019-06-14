@@ -8,6 +8,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace WebAddressbookTests
 {
@@ -68,6 +69,31 @@ namespace WebAddressbookTests
                 File.ReadAllText(@"contacts.json"));
         }
 
+        /// <summary>
+        /// Читаем из excel файла
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<ContactData> ContactDataFromExcelFile()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            Excel.Application app = new Excel.Application();
+            //app.Visible = true;
+            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"groups.xlsx"));
+            Excel.Worksheet sheet = wb.ActiveSheet;
+            Excel.Range range = sheet.UsedRange;
+            for (int i = 1; i <= range.Rows.Count; i++)
+            {
+                contacts.Add(new ContactData()
+                {
+                    Firstname = range.Cells[i, 1].Value,
+                    Lastname = range.Cells[i, 2].Value
+                });
+            }
+            wb.Close();
+            //app.Visible = false;
+            app.Quit();
+            return contacts;
+        }
 
         [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactCreationTest(ContactData contact)
