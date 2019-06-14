@@ -85,6 +85,7 @@
     <Compile Include="Model\GroupContactRelation.cs" />
     <Compile Include="Tests\AddingContactToGroupTests.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
+    <Compile Include="Tests\ContactTestBase.cs" />
     <Compile Include="Tests\DeleteContactFromGroup.cs" />
     <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\SearchTests.cs" />

@@ -20,7 +20,6 @@ namespace WebAddressbookTests
         {
         }
 
-        
         public GroupHelper Modify(int index, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
@@ -29,6 +28,17 @@ namespace WebAddressbookTests
             FillGroupForm(newData);
             SubmitGroupModification();
             ReturnToGroupsPage();
+            return this;
+        }
+
+        public GroupHelper ModifyById(GroupData oldData, GroupData newData)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(oldData.Id);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            manager.Navigator.GoToGroupsPage();
             return this;
         }
 
@@ -150,6 +160,10 @@ namespace WebAddressbookTests
         {
             return IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]"));
         }
+        /*public bool CheckRecordById(string id)
+        {
+            return IsElementPresent(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])"));
+        }*/
 
         public bool AssertFields(GroupData group)
         {

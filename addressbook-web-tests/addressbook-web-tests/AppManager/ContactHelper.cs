@@ -38,6 +38,24 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectContactById(contact.Id);
+            RemoveContact();
+            CloseAlert();
+            manager.Navigator.OpenHomePage();
+            return this;
+        }
+
+        public ContactHelper SelectContactById(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
+            return this;
+        }
+
+
+
         public ContactHelper Modify(int index, ContactData newData)
         {
             manager.Navigator.OpenHomePage();
@@ -46,6 +64,23 @@ namespace WebAddressbookTests
             SubmitContactModification();
             ReturnToHomePage();
             return this;
+        }
+
+
+        internal ContactHelper ModifyById(ContactData oldData, ContactData newData)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectContactById(oldData.Id);
+            InitContactModificationById(oldData.Id);
+            FillContactForm(newData);
+            SubmitContactModification();
+            manager.Navigator.OpenHomePage();
+            return this;
+        }
+
+        public void InitContactModificationById(string id)
+        {
+            driver.Navigate().GoToUrl("http://localhost:8080/addressbook/edit.php?id=" + id + "");
         }
 
         public ContactHelper Create(ContactData contact)

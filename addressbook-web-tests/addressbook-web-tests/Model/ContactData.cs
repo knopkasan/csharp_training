@@ -71,37 +71,71 @@ namespace WebAddressbookTests
         [Column(Name = "lastname")]
         public string Lastname { get; set; }
 
+        [Column(Name = "middlename")]
         public string Middlename { get; set; }
 
+        [Column(Name = "nickname")]
         public string Nickname { get; set; }
 
+        [Column(Name = "title")]
         public string Title { get; set; }
 
+        [Column(Name = "company")]
         public string Company { get; set; }
 
+        [Column(Name = "address")]
         public string Address { get; set; }
 
+        [Column(Name = "home")]
         public string HomePhone { get; set; }
 
+        [Column(Name = "mobile")]
         public string MobilePhone { get; set; }
 
+        [Column(Name = "work")]
         public string WorkPhone { get; set; }
 
+        [Column(Name = "fax")]
         public string Fax { get; set; }
 
+        [Column(Name = "email")]
         public string Email { get; set; }
 
+        [Column(Name = "email2")]
         public string Email2 { get; set; }
 
+        [Column(Name = "email3")]
         public string Email3 { get; set; }
 
+        [Column(Name = "homepage")]
         public string Homepage { get; set; }
 
+        [Column(Name = "ayear")]
+        public string Ayear { get; set; }
+
+        [Column(Name = "byear")]
+        public string Byear { get; set; }
+
+        [Column(Name = "address2")]
         public string Address2 { get; set; }
 
+        [Column(Name = "phone2")]
         public string Phone2 { get; set; }
 
+        [Column(Name = "notes")]
         public string Notes { get; set; }
+
+        [Column(Name = "bday")]
+        public string Bday { get; set; }
+
+        [Column(Name = "aday")]
+        public string Aday { get; set; }
+
+        [Column(Name = "amonth")]
+        public string Amonth { get; set; }
+
+        [Column(Name = "bmonth")]
+        public string Bmonth { get; set; }
 
         [Column(Name = "id"), PrimaryKey]
         public string Id { get; set; }
