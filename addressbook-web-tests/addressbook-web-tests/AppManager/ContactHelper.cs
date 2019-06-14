@@ -320,6 +320,7 @@ namespace WebAddressbookTests
 
         private void SelectContact(string contactId)
         {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             driver.FindElement(By.Id(contactId)).Click();
         }
 
