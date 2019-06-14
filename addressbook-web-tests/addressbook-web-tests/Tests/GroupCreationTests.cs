@@ -8,11 +8,12 @@ using NUnit.Framework;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         /// <summary>
         /// Генерируем рандомные данные для теста
@@ -77,7 +78,7 @@ namespace WebAddressbookTests
         public void GroupCreationTest(GroupData group)
         {
             //preporation
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             //action
             app.Groups.Create(group);
@@ -85,7 +86,7 @@ namespace WebAddressbookTests
             //verification
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -134,6 +135,35 @@ namespace WebAddressbookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups.Count, newGroups.Count);
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            //Сравниваем время выполнения получения групп контактов из ui и db
+            /*DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));*/
+
+
+            //Получаем список контактов из групп
+            /*foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            {
+                System.Console.Out.WriteLine(contact);
+            }*/
+
+            foreach (ContactData contact in ContactData.GetAll())
+            {
+                System.Console.Out.WriteLine(contact.Deprecated);
+            }
+
+
         }
     }
 }
