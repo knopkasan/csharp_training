@@ -103,7 +103,7 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            //preporation
+            //preparation
             List<GroupData> oldGroups = GroupData.GetAll();
 
             //action
@@ -122,7 +122,7 @@ namespace WebAddressbookTests
         [Test]
         public void EmptyGroupCreationTest()
         {
-            //preporation
+            //preparation
             GroupData group = new GroupData("");
             group.Header = "";
             group.Footer = "";
@@ -144,7 +144,7 @@ namespace WebAddressbookTests
         [Test]
         public void BadNameGroupCreationTest()
         {
-            //preporation
+            //preparation
             GroupData group = new GroupData("a'a");
             group.Header = "";
             group.Footer = "";

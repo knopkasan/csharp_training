@@ -28,6 +28,23 @@ namespace WebAddressbookTests
         {
         }
 
+        public void CheckExcistContactWithoutGroup(ContactData contact, ContactData contactData)
+        {
+            if (contact == null)
+            {
+                Create(contactData);
+            }
+        }
+
+        public void CheckExcistContactInGroup(ContactData contactToBeRemoved, List<ContactData> oldList, GroupData group)
+        {
+            if (contactToBeRemoved == null)
+            {
+                ContactData newContact = ContactData.GetAll().Except(oldList).First();
+                AddContactToGroup(newContact, group);
+            }
+        }
+
         public ContactHelper Remove(int index)
         {
             manager.Navigator.OpenHomePage();

@@ -13,7 +13,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            //preporation
+            //preparation
             ContactData newCont = new ContactData("Иван", "Иванов");
             app.Navigator.OpenHomePage();
             app.Contacts.CheckRecordExistAndCreate(0, newCont);

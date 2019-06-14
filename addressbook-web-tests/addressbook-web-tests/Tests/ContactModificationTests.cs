@@ -13,7 +13,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            //preporation
+            //preparation
             ContactData data = new ContactData("Иван", "Иванов");
             app.Navigator.OpenHomePage();
             app.Contacts.CheckRecordExistAndCreate(0, data);
