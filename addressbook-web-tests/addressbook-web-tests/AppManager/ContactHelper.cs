@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -372,7 +373,6 @@ namespace WebAddressbookTests
 
         private void SelectContact(string contactId)
         {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             driver.FindElement(By.Id(contactId)).Click();
         }
 

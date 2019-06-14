@@ -29,6 +29,7 @@ namespace WebAddressbookTests
             navigationHelper = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
         }
 
         public static ApplicationManager GetInstance()

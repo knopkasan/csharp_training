@@ -13,10 +13,6 @@ namespace WebAddressbookTests
         public void TestRemoveContactFromGroup()
         {
             //preparation
-            GroupData group = GroupData.GetAll()[0];
-            List<ContactData> oldList = group.GetContacts();
-            ContactData contactToBeRemoved = oldList.FirstOrDefault();
-
             ContactData contactData = new ContactData("Иван", "Иванов");
             app.Navigator.OpenHomePage();
             app.Contacts.CheckRecordExistAndCreate(0, contactData);
@@ -25,7 +21,15 @@ namespace WebAddressbookTests
             app.Navigator.GoToGroupsPage();
             app.Groups.CheckRecordsExistAndCreate(0, groupData);
 
+            GroupData group = GroupData.GetAll()[0];
+            List<ContactData> oldList = group.GetContacts();
+            ContactData contactToBeRemoved = oldList.FirstOrDefault();
             app.Contacts.CheckExcistContactInGroup(contactToBeRemoved, oldList, group);
+
+            if (contactToBeRemoved == null)
+            {
+                contactToBeRemoved = ContactData.GetAll().Except(oldList).FirstOrDefault();
+            }
 
             //actions
             app.Contacts.RemoveContactFromGroup(contactToBeRemoved, group);
