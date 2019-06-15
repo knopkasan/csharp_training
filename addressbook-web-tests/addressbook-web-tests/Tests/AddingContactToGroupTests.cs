@@ -28,7 +28,7 @@ namespace WebAddressbookTests
 
             if(contact == null)
             {
-                contact = ContactData.GetAll().Except(oldList).FirstOrDefault();
+                contact = contactData;
             }
 
             //actions

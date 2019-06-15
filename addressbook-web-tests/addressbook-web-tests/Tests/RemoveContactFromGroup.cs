@@ -28,7 +28,7 @@ namespace WebAddressbookTests
 
             if (contactToBeRemoved == null)
             {
-                contactToBeRemoved = ContactData.GetAll().Except(oldList).FirstOrDefault();
+                contactToBeRemoved = group.GetContacts().FirstOrDefault();
             }
 
             //actions

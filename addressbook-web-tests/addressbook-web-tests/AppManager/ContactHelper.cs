@@ -41,7 +41,7 @@ namespace WebAddressbookTests
         {
             if (contactToBeRemoved == null)
             {
-                ContactData newContact = ContactData.GetAll().Except(oldList).First();
+                ContactData newContact = ContactData.GetAll().First();
                 AddContactToGroup(newContact, group);
             }
         }
