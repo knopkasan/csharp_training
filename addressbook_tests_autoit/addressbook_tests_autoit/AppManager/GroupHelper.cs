@@ -30,6 +30,30 @@ namespace addressbook_tests_autoit
             return list;
         }
 
+        public void CreateGroupIfNeeded(List<GroupData> groups, GroupData group)
+        {
+            if (groups == null)
+            {
+                Add(group);
+            }
+
+        }
+
+        public void Remove(int index)
+        {
+            OpenGroupsDialog();
+            SelectGroup(index);
+            aux.ControlClick(GROUPWINTITLE, "", "LOCATOR");//на рабочей тачке на запускается приложение, нет возможности получить локатор
+            CloseGroupsDialog();
+        }
+
+        public void SelectGroup (int index)
+        {
+            aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51", "Select", "#0|#"+ index, "");
+        }
+
+
+
         public void Add(GroupData newGroup)
         {
             OpenGroupsDialog();
