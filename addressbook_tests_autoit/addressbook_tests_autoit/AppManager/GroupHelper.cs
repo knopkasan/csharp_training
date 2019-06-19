@@ -14,7 +14,7 @@ namespace addressbook_tests_autoit
         public List<GroupData> GetGroupList()
         {
             List<GroupData> list = new List<GroupData>();
-            OpenGroupsDialog();
+            OpenGroupsDialogue();
             string count = aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51", "GetItemCount", "#0", "");
             for(int i = 0; i< int.Parse(count); i++)
             {
@@ -26,7 +26,7 @@ namespace addressbook_tests_autoit
                     Name = item
                 });
             }
-            CloseGroupsDialog();
+            CloseGroupsDialogue();
             return list;
         }
 
@@ -41,10 +41,10 @@ namespace addressbook_tests_autoit
 
         public void Remove(int index)
         {
-            OpenGroupsDialog();
+            OpenGroupsDialogue();
             SelectGroup(index);
             aux.ControlClick(GROUPWINTITLE, "", "LOCATOR");//на рабочей тачке на запускается приложение, нет возможности получить локатор
-            CloseGroupsDialog();
+            CloseGroupsDialogue();
         }
 
         public void SelectGroup (int index)
@@ -56,20 +56,20 @@ namespace addressbook_tests_autoit
 
         public void Add(GroupData newGroup)
         {
-            OpenGroupsDialog();
+            OpenGroupsDialogue();
             aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d53");
             aux.Send(newGroup.Name);
             aux.Send("{ENTER}");
-            CloseGroupsDialog();
+            CloseGroupsDialogue();
         }
 
-        private void OpenGroupsDialog()
+        private void OpenGroupsDialogue()
         {
             manager.Aux.ControlClick(WINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d512");
             aux.WinWait(GROUPWINTITLE);
         }
 
-        private void CloseGroupsDialog()
+        private void CloseGroupsDialogue()
         {
             aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d54");
         }

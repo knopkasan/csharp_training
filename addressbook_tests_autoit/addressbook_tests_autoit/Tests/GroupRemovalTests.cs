@@ -16,7 +16,10 @@ namespace addressbook_tests_autoit
                 Name = "тест"
             };
             app.Groups.CreateGroupIfNeeded(oldGroups, newGroup);
-            oldGroups = app.Groups.GetGroupList();
+            if (oldGroups == null)
+            {
+                oldGroups = app.Groups.GetGroupList();
+            }
 
             //action
             app.Groups.Remove(1);
