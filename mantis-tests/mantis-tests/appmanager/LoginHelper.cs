@@ -27,7 +27,7 @@ namespace mantis_tests
             driver.FindElement(By.XPath("//input[@value='Войти']")).Click();
             Type(By.Name("password"), account.Password);
             //driver.FindElement(By.CssSelector("input#remember-login.ace")).Click();
-            driver.FindElement(By.XPath("//input[@value='Войти']")).Click();
+            driver.FindElement(By.CssSelector("input.btn")).Click();
         }
         public bool IsLoggedIn()
         {

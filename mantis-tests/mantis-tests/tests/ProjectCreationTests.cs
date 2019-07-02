@@ -24,19 +24,25 @@ namespace mantis_tests
         {
             //preparation
             ProjectData project = new ProjectData(GenerateRandomString(10));
-            List<ProjectData> oldProjects = app.Project.GetProjectList();
+            AccountData account = new AccountData("administrator", "root1") { };
+            Mantis.ProjectData [] oldProjects = app.API.GetProjectListThroughAPI(account);
             
             //action
             app.Project.Create(project);
 
             //verification
-            Assert.AreEqual(oldProjects.Count + 1, app.Project.GetProjectCount());
-            List<ProjectData> newProjects = app.Project.GetProjectList();
+            Assert.AreEqual(oldProjects.Length + 1, app.Project.GetProjectCount());
 
-            oldProjects.Add(project);
+            Mantis.ProjectData[] newProjects = app.API.GetProjectListThroughAPI(account);
+            Assert.AreEqual(oldProjects.Length + 1, newProjects.Length);
+
+            /*Array.Resize(ref oldProjects, oldProjects.Length + 1);
+            oldProjects[oldProjects.Length - 1] = (Mantis.ProjectData)project;*/
+
+            /*oldProjects.Add(project);
             oldProjects.Sort();
             newProjects.Sort();
-            Assert.AreEqual(oldProjects, newProjects);
+            Assert.AreEqual(oldProjects, newProjects);*/
 
         }
     }

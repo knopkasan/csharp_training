@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace mantis_tests
@@ -17,6 +18,26 @@ namespace mantis_tests
             OpenRegistrationForm();
             FillRegistrationForm(account);
             SubmitRegistration();
+            string url = GetConfirmationUrl(account);
+            FillPassworForm(url);
+            SubmitPasswordForm();
+        }
+
+        public string GetConfirmationUrl(AccountData account)
+        {
+            string message = manager.Mail.GetLastMail(account);
+            Match match = Regex.Match(message, @"http://\S*");
+            return match.Value;
+        }
+
+        public void FillPassworForm(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SubmitPasswordForm()
+        {
+            throw new NotImplementedException();
         }
 
         private void OpenRegistrationForm()

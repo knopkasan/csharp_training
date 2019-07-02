@@ -14,24 +14,44 @@ namespace mantis_tests
         {
             //preparation
             ProjectData project = new ProjectData(GenerateRandomString(10));
-            List<ProjectData> oldProjects = app.Project.GetProjectList();
+            AccountData account = new AccountData("administrator", "root1") { };
+            Mantis.ProjectData[] oldProjects = app.API.GetProjectListThroughAPI(account);
             if(oldProjects == null)
             {
-                app.Project.Create(project);
-                oldProjects = app.Project.GetProjectList();
+                app.API.CreateNewProject(account, project);
             }
 
             //action
             app.Project.Remove(0);
 
             //verification
-            Assert.AreEqual(oldProjects.Count - 1, app.Project.GetProjectCount());
-            List<ProjectData> newProjects = app.Project.GetProjectList();
+            Assert.AreEqual(oldProjects.Length - 1, app.Project.GetProjectCount());
 
-            oldProjects.RemoveAt(0);
+            Mantis.ProjectData[] newProjects = app.API.GetProjectListThroughAPI(account);
+            Assert.AreEqual(oldProjects.Length - 1, newProjects.Length);
+            
+
+           /* oldProjects.RemoveAt(0);
             oldProjects.Sort();
             newProjects.Sort();
-            Assert.AreEqual(oldProjects, newProjects);
+            Assert.AreEqual(oldProjects, newProjects);*/
+        }
+
+        [Test]
+        public void AddNewProject()
+        {
+            AccountData account = new AccountData()
+            {
+                Username = "administrator",
+                Password = "root1"
+            };
+
+            ProjectData project = new ProjectData()
+            {
+                Name = "The first of API tests"
+            };
+
+            app.API.CreateNewProject(account, project);
 
         }
     }

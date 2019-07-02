@@ -32,7 +32,6 @@ namespace mantis_tests
             SelectProject(index);
             InitRemove();
             SubmitRemove();
-            manager.Navigator.GoToManageProject();
             projectCache = null;
         }
 
@@ -64,7 +63,11 @@ namespace mantis_tests
         private void SelectProject(int index)
         {
             //.col-md-12 > .widget-color-blue2 table tbody tr
-            driver.FindElement(By.XPath("//div[@class='widget-box widget-color-blue2']//tbody/tr[" + (index + 1) + "]")).FindElement(By.TagName("a")).Click();
+            driver.FindElement(By.XPath("//div[@class='widget-box widget-color-blue2']//tbody/tr[" + (index + 1) + "]"))
+                .FindElement(By.TagName("a")).Click();
+            
+           /* IList<IWebElement> elements = driver.FindElements(By.CssSelector(".col-md-12 > .widget-color-blue2 table tbody tr"));
+            elements[0].Click();*/
         }
 
         private List<ProjectData> projectCache = null;
@@ -87,6 +90,8 @@ namespace mantis_tests
                 }
             }
             return new List<ProjectData>(projectCache);
+
+
         }
 
         public int GetProjectCount()

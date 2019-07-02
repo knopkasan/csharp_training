@@ -12,9 +12,14 @@ namespace mantis_tests
         {
             this.Name = name;
         }
+        public ProjectData()
+        {
 
+        }
+
+        public string Id { get;  set; }
         public string Name { get; set;}
-
+        
         public int CompareTo(ProjectData other)
         {
             if (Object.ReferenceEquals(other, null))
