@@ -15,7 +15,7 @@ namespace mantis_tests
             //preparation
             ProjectData project = new ProjectData(GenerateRandomString(10));
             AccountData account = new AccountData("administrator", "root1") { };
-            Mantis.ProjectData[] oldProjects = app.API.GetProjectListThroughAPI(account);
+            List<ProjectData> oldProjects = app.API.GetProjectListThroughAPI(account);
             if(oldProjects == null)
             {
                 app.API.CreateNewProject(account, project);
@@ -25,16 +25,14 @@ namespace mantis_tests
             app.Project.Remove(0);
 
             //verification
-            Assert.AreEqual(oldProjects.Length - 1, app.Project.GetProjectCount());
+            Assert.AreEqual(oldProjects.Count - 1, app.Project.GetProjectCount());
 
-            Mantis.ProjectData[] newProjects = app.API.GetProjectListThroughAPI(account);
-            Assert.AreEqual(oldProjects.Length - 1, newProjects.Length);
-            
+            List<ProjectData> newProjects = app.API.GetProjectListThroughAPI(account);
 
-           /* oldProjects.RemoveAt(0);
+            oldProjects.RemoveAt(0);
             oldProjects.Sort();
             newProjects.Sort();
-            Assert.AreEqual(oldProjects, newProjects);*/
+            Assert.AreEqual(oldProjects, newProjects);
         }
 
         [Test]
